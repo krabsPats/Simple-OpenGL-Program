@@ -11,33 +11,49 @@ void init(){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
-void windowLoad(){
+GLFWwindow* windowLoad(){
     GLFWwindow* window = glfwCreateWindow(800, 600, "Hello world", NULL, NULL);
     glfwMakeContextCurrent(window);
 
-    while(!glfwWindowShouldClose(window))
-    {
-        glfwSwapBuffers(window);
-        glfwPollEvents();    
-    }
+
+    return window;
 } 
+
+void gladSec(){
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        std::cout << "Error GLAD";
+    }
+
+    glViewport(0,0,800,600);
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+}
+
+void frameSize(GLFWwindow* window, int width, int height){
+    glViewport(0,0,width,height);  
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
+}
 
 main(){
 
     init();
 
-    GLFWwindow* window;
+    GLFWwindow* window = windowLoad();;
+    
+    gladSec();
 
-    windowLoad();
-    
-    
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cout << "Error GLAD";
+    glfwSetFramebufferSizeCallback(window, frameSize);  
+        
+    while(!glfwWindowShouldClose(window))
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        
+        glfwSwapBuffers(window);
+        glfwPollEvents();    
     }
 
-        
-
-
-
+    glfwTerminate();
     return 0;
 }
