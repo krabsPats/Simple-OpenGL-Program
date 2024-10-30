@@ -40,7 +40,7 @@ main(){
 
     init();
 
-    GLFWwindow* window = windowLoad();;
+    GLFWwindow* window = windowLoad();
     
     gladSec();
 
