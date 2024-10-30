@@ -26,7 +26,7 @@ void gladSec(){
 
     glViewport(0,0,800,600);
 
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
 }
 
 void frameSize(GLFWwindow* window, int width, int height){
