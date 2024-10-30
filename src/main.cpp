@@ -19,15 +19,6 @@ GLFWwindow* windowLoad(){
     return window;
 } 
 
-void gladSec(){
-    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        std::cout << "Error GLAD";
-    }
-
-    glViewport(0,0,800,600);
-
-    glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
-}
 
 void frameSize(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);  
@@ -41,8 +32,13 @@ main(){
     init();
 
     GLFWwindow* window = windowLoad();
-    
-    gladSec();
+
+    if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        std::cout << "Error GLAD";
+        return -1;
+    }
+
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     glfwSetFramebufferSizeCallback(window, frameSize);  
         
