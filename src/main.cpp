@@ -20,7 +20,7 @@ GLFWwindow* windowLoad(){
 } 
 
 
-void frameSize(GLFWwindow* window, int width, int height){
+void frameDynamic(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);  
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -40,7 +40,7 @@ main(){
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-    glfwSetFramebufferSizeCallback(window, frameSize);  
+    glfwSetFramebufferSizeCallback(window, frameDynamic);  
         
     while(!glfwWindowShouldClose(window))
     {
