@@ -20,7 +20,7 @@ GLFWwindow* windowLoad(){
 } 
 
 
-void frameDynamic(GLFWwindow* window, int width, int height){
+void frameDynamics(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);  
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -55,7 +55,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-    glfwSetFramebufferSizeCallback(window, frameDynamic);  
+    glfwSetFramebufferSizeCallback(window, frameDynamics);  
         
     while(!glfwWindowShouldClose(window))
     {
