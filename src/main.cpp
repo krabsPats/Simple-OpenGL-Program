@@ -3,6 +3,24 @@
 #include <GLFW/glfw3.h>
 
 
+
+void laterUses(){
+
+float verticesData[] = {
+    -0.5f, -0.5f, 0.0f,
+     0.5f, -0.5f, 0.0f,
+     0.0f,  0.5f, 0.0f
+};  
+
+    unsigned int VertexBuffer;
+    glGenBuffers(1, &VertexBuffer);
+    //Make buffer
+
+    glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
+
+    glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData), verticesData,GL_STATIC_DRAW);
+}
+
 void init(){
     glfwInit();
     //triple hints
@@ -20,7 +38,7 @@ GLFWwindow* windowLoad(){
 } 
 
 
-void frameDynamics(GLFWwindow* window, int width, int height){
+void frameDynamic(GLFWwindow* window, int width, int height){
     glViewport(0,0,width,height);  
 
     glClear(GL_COLOR_BUFFER_BIT);
@@ -53,19 +71,17 @@ const char* fragmentShaderSource = "#version 330 core\n"
         return -1;
     }
 
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.5f, 1.0f, 0.3f, 1.0f);
 
-    glfwSetFramebufferSizeCallback(window, frameDynamics);  
+    glfwSetFramebufferSizeCallback(window, frameDynamic);  
         
     while(!glfwWindowShouldClose(window))
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);   
         
         glfwSwapBuffers(window);
         glfwPollEvents();    
     }
-
-    
 
     glfwTerminate();
     return 0;

@@ -7,13 +7,13 @@
             "args": [
                 "-g",
                 "-std=c++17",
-                "-IC:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl2\\include",
-                "-LC:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl2\\lib",
-                "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl2\\src\\*.cpp",
-                "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl2\\src\\glad.c",
+                "-IC:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\include",
+                "-LC:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\lib",
+                "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\src\\*.cpp",
+                "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\src\\glad.c",
                 "-lglfw3dll",
                 "-o",
-                "${workspaceFolder}/main.exe"
+                "${workspaceFolder}\\main.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"

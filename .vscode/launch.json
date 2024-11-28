@@ -4,7 +4,7 @@
             "name": "C/C++: g++.exe build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl2\\main.exe",
+            "program": "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
