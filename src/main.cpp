@@ -72,22 +72,18 @@ float verticesData[] = {
 
 
     unsigned int vertexSource = glCreateShader(GL_VERTEX_SHADER);
-
     glShaderSource(vertexSource, 1, &vertexShaderSource, NULL);
-
     glCompileShader(vertexSource);
+    //Creates a shader which compile a certain GLSL code. This is required to the graphic pipeline.
 
     unsigned int fragmentSource = glCreateShader(GL_FRAGMENT_SHADER);
-
     glShaderSource(fragmentSource, 1, &fragmentShaderSource, NULL);
-
     glCompileShader(fragmentSource);
+    //Creare a shader which compile a certain GLSL code. This is required to the graphic pipeline.
 
     unsigned int shaderProgram =  glCreateProgram();
-
     glAttachShader(shaderProgram, vertexSource);
     glAttachShader(shaderProgram, fragmentSource);
-
     glLinkProgram(shaderProgram);
 
     unsigned int VBO;
