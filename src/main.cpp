@@ -3,6 +3,13 @@
 #include <GLFW/glfw3.h>
 
 
+struct drawData{
+    unsigned int shaderProgramStruct;
+    unsigned int VAOSTRUCT;
+};
+
+
+
 void init(){
     glfwInit();
     //triple hints
@@ -21,16 +28,22 @@ GLFWwindow* windowLoad(){
 
 
 void frameDynamic(GLFWwindow* window, int width, int height){
+    
+    drawData* data = (drawData*)glfwGetWindowUserPointer(window);
+    unsigned int shaderProgram = data->shaderProgramStruct;
+    unsigned int VAO = data->VAOSTRUCT;
+    
+
     glViewport(0,0,width,height);  
 
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    
     glfwSwapBuffers(window);
 }
-
-
-
-
-
 
 
 main(){
@@ -49,12 +62,6 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
 "}\n\0";
 
-float verticesData[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-};  
-
     init();
 
     GLFWwindow* window = windowLoad();
@@ -68,6 +75,17 @@ float verticesData[] = {
 
     glfwSetFramebufferSizeCallback(window, frameDynamic);  
 
+
+    float verticesData[] = {
+        0.0f, -0.5f, 0.0f,
+        1.0f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f
+    };  
+    float verticesData2[] = {
+        -1.0f, -0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f
+    };  
 
 
 
@@ -87,10 +105,19 @@ float verticesData[] = {
     glLinkProgram(shaderProgram);
 
     unsigned int VBO;
+
+    unsigned int VBO2;
+
+
     unsigned int VAO;
+
+    unsigned int VAO2;
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &VBO2);
+
     glGenVertexArrays(1, &VAO);
-    //Make buffer.
+    glGenVertexArrays(1, &VAO2);
+    //Make buffers.
 
     glBindVertexArray(VAO);
 
@@ -115,17 +142,40 @@ float verticesData[] = {
 
     glEnableVertexAttribArray(0);
 
-        
+
+    glBindVertexArray(VAO2);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+
+    glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData2), verticesData2, GL_STATIC_DRAW);
+
+
+    glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*) 0);
+
+    glEnableVertexAttribArray(0);
+   
+
+    drawData data;
+
+    data.shaderProgramStruct = shaderProgram;
+    data.VAOSTRUCT = VAO;
+
+    glfwSetWindowUserPointer(window, &data);
+
+
     while(!glfwWindowShouldClose(window))
-    {
+    { 
         glClear(GL_COLOR_BUFFER_BIT);   
 
 
 
         glUseProgram(shaderProgram);
+
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
+        glBindVertexArray(VAO2);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         glfwSwapBuffers(window);
         glfwPollEvents();    
 
