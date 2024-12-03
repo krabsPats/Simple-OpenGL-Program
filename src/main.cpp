@@ -5,7 +5,9 @@
 
 struct drawData{
     unsigned int shaderProgramStruct;
-    unsigned int VAOSTRUCT;
+    unsigned int VAOSTRUCT1;
+    unsigned int VAOSTRUCT2;
+
 };
 
 
@@ -31,7 +33,8 @@ void frameDynamic(GLFWwindow* window, int width, int height){
     
     drawData* data = (drawData*)glfwGetWindowUserPointer(window);
     unsigned int shaderProgram = data->shaderProgramStruct;
-    unsigned int VAO = data->VAOSTRUCT;
+    unsigned int VAO1 = data->VAOSTRUCT1;
+    unsigned int VAO2 = data->VAOSTRUCT2;
     
 
     glViewport(0,0,width,height);  
@@ -39,7 +42,10 @@ void frameDynamic(GLFWwindow* window, int width, int height){
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(shaderProgram);
-    glBindVertexArray(VAO);
+    glBindVertexArray(VAO1);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+     glBindVertexArray(VAO2);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     
     glfwSwapBuffers(window);
@@ -71,7 +77,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
         return -1;
     }
 
-    glClearColor(0.5f, 1.0f, 0.3f, 1.0f);
+    glClearColor(0.5f, 0.f, 0.5f, 1.0f);8
 
     glfwSetFramebufferSizeCallback(window, frameDynamic);  
 
@@ -104,24 +110,19 @@ const char* fragmentShaderSource = "#version 330 core\n"
     glAttachShader(shaderProgram, fragmentSource);
     glLinkProgram(shaderProgram);
 
-    unsigned int VBO;
+    unsigned int VBO[2];
 
-    unsigned int VBO2;
+    unsigned int VAO[2];
 
 
-    unsigned int VAO;
+    glGenBuffers(2, VBO);
 
-    unsigned int VAO2;
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &VBO2);
-
-    glGenVertexArrays(1, &VAO);
-    glGenVertexArrays(1, &VAO2);
+    glGenVertexArrays(2, VAO);
     //Make buffers.
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(VAO[0]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
     //Bind a target to our buffer which is necessery for the gpu to know what is this buffer about.
 
     glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData), verticesData, GL_STATIC_DRAW);
@@ -143,9 +144,9 @@ const char* fragmentShaderSource = "#version 330 core\n"
     glEnableVertexAttribArray(0);
 
 
-    glBindVertexArray(VAO2);
+    glBindVertexArray(VAO[1]);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO2);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
 
     glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData2), verticesData2, GL_STATIC_DRAW);
 
@@ -158,7 +159,8 @@ const char* fragmentShaderSource = "#version 330 core\n"
     drawData data;
 
     data.shaderProgramStruct = shaderProgram;
-    data.VAOSTRUCT = VAO;
+    data.VAOSTRUCT1 = VAO[0];
+    data.VAOSTRUCT2 = VAO[1];
 
     glfwSetWindowUserPointer(window, &data);
 
@@ -171,10 +173,10 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
         glUseProgram(shaderProgram);
 
-        glBindVertexArray(VAO);
+        glBindVertexArray(VAO[0]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
-        glBindVertexArray(VAO2);
+        glBindVertexArray(VAO[1]);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         glfwSwapBuffers(window);
         glfwPollEvents();    
