@@ -23,6 +23,7 @@ void init(){
 GLFWwindow* windowLoad(){
     GLFWwindow* window = glfwCreateWindow(800, 600, "Hello world", NULL, NULL);
     glfwMakeContextCurrent(window);
+    
 
 
     return window;
@@ -52,7 +53,9 @@ void frameDynamic(GLFWwindow* window, int width, int height){
 }
 
 
-main(){
+int main(){
+
+    std::cout << "hello";
 
     const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
@@ -72,12 +75,19 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
     GLFWwindow* window = windowLoad();
 
+
+    if (!window) {
+    std::cerr << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return -1;
+}
+
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         std::cout << "Error GLAD";
         return -1;
     }
 
-    glClearColor(0.5f, 0.f, 0.5f, 1.0f);8
+    glClearColor(0.1f, 0.8f, 0.8f, 1.0f);
 
     glfwSetFramebufferSizeCallback(window, frameDynamic);  
 

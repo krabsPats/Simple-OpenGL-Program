@@ -13,7 +13,7 @@
                 "C:\\Users\\Kevin\\Desktop\\Everything\\PROGRAMMING\\Opengl3\\src\\glad.c",
                 "-lglfw3dll",
                 "-o",
-                "${workspaceFolder}/main.exe"
+                "${workspaceFolder}\\main.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -29,4 +29,4 @@
         }
     ],
     "version": "2.0.0"
-}
+}           
