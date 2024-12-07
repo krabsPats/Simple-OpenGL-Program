@@ -15,7 +15,17 @@ struct drawData{
 
 
 
-void addTriangle(GLFWwindow* window,const char* vertexShaderSourceP, const char* fragmentShaderSourceP, float verticesDataP[], float verticesData2P[], unsigned int* vertexSource, unsigned int* fragmentSource,  unsigned int* shaderProgram,  unsigned int* VBO, unsigned int* VAO){
+void addTriangle(GLFWwindow* window,const char* vertexShaderSourceP, const char* fragmentShaderSourceP, unsigned int* vertexSource, unsigned int* fragmentSource,  unsigned int* shaderProgram,  unsigned int* VBO, unsigned int* VAO){
+
+    float verticesData[] = {
+        0.0f, -0.5f, 0.0f,
+        1.0f, -0.5f, 0.0f,
+        0.5f,  0.5f, 0.0f
+    };  
+    float verticesData2[] = {
+        -1.0f, -0.5f, 0.0f,
+        0.0f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f};
 
 
     *vertexSource = glCreateShader(GL_VERTEX_SHADER);
@@ -46,7 +56,7 @@ void addTriangle(GLFWwindow* window,const char* vertexShaderSourceP, const char*
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
     //Bind a target to our buffer which is necessery for the gpu to know what is this buffer about.
 
-    glBufferData(GL_ARRAY_BUFFER,sizeof(*verticesDataP), verticesDataP, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData), verticesData, GL_STATIC_DRAW);
     //Here we add the data that we need for the graphcis pipeline. 
     //Vertex Shader -> Geometry Shader -> Shape assembly and so on...
     
@@ -69,7 +79,7 @@ void addTriangle(GLFWwindow* window,const char* vertexShaderSourceP, const char*
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
 
-    glBufferData(GL_ARRAY_BUFFER,sizeof(*verticesData2P), verticesData2P, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(verticesData2), verticesData2, GL_STATIC_DRAW);
 
 
     glVertexAttribPointer(0,3,GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*) 0);
@@ -127,7 +137,7 @@ int main(){
     std::cout << "hello";
 
     const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
+"\n"
 "void main()\n"
 "{\n"
 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
@@ -156,7 +166,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
         return -1;
     }
 
-    glClearColor(0.0f, 0.0f, 0.1f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     glfwSetFramebufferSizeCallback(window, frameDynamic);  
 
@@ -180,13 +190,8 @@ const char* fragmentShaderSource = "#version 330 core\n"
     unsigned int VBO[2];
     unsigned int VAO[2];
 
-    std::cout << VAO[1] << '\n';
 
-    addTriangle(window, vertexShaderSource, fragmentShaderSource, verticesData, verticesData2, &vertexSource, &fragmentSource, &shaderProgram, VBO, VAO);
-
-    std::cout << VAO[1] << '\n';
-    
-    std::cout << VAO[2] << '\n';
+    addTriangle(window, vertexShaderSource, fragmentShaderSource, &vertexSource, &fragmentSource, &shaderProgram, VBO, VAO);
     
     drawData data;
 
